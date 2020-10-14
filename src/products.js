@@ -22,7 +22,7 @@ const products = [
         category: 'Electronics',
         price: 599.99,
         countInStock: 7,
-        rating: 4.0,
+        rating: 4.4,
         numReviews: 8,
     },
     {
@@ -35,7 +35,7 @@ const products = [
         category: 'Electronics',
         price: 929.99,
         countInStock: 5,
-        rating: 3,
+        rating: 3.1,
         numReviews: 12,
     },
     {
@@ -74,8 +74,21 @@ const products = [
         category: 'Electronics',
         price: 29.99,
         countInStock: 0,
-        rating: 4,
+        rating: 2.9,
         numReviews: 12,
+    },
+    {
+        _id: '666',
+        name: 'TEST Echo Dot 3rd Generation',
+        image: '/images/alexa.jpg',
+        description:
+            'Meet Echo Dot - Our most popular smart speaker with a fabric design. It is our most compact smart speaker that fits perfectly into small space',
+        brand: 'Amazon',
+        category: 'Electronics',
+        price: 29.99,
+        countInStock: 0,
+        rating: null,
+        numReviews: null,
     },
 ]
 

@@ -2,3 +2,8 @@ main {
     font-family: Kufam, monospace;
     min-height: 80vh;
 }
+
+.rating {
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+}
