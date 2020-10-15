@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Row, Col} from "react-bootstrap";
+import {Row, Col} from 'react-bootstrap';
 import products from '../products';
-import Product from "../components/Product";
+import Product from '../components/Product';
 
 
 class HomeScreen extends Component {

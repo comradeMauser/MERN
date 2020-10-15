@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
 const Rating = ({value, numReviews}) => {
     //color dependence on rating
     const color = !value ? 'grey' : value < 3 ? 'red' : value < 4.5 ? 'green' : '#4284d3'
