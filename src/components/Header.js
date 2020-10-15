@@ -5,7 +5,7 @@ import {LinkContainer} from 'react-router-bootstrap';
 
 const Header = () => {
     return (
-        <header>
+        <header className='header'>
             <Navbar bg="primary" variant="dark">
                 <Container className='my-3'>
 
@@ -20,6 +20,10 @@ const Header = () => {
 
                         <LinkContainer to='/login'>
                             <Nav.Link><i className="fa fa-user"> </i> Sign in</Nav.Link>
+                        </LinkContainer>
+
+                        <LinkContainer to='/about'>
+                            <Nav.Link>About</Nav.Link>
                         </LinkContainer>
                     </Nav>
 
