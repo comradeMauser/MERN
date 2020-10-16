@@ -8,7 +8,11 @@ app.get('/', (request, response) => {
     response.send("it's works!")
 });
 
-app.get('/api/product/:id', (request, response) => {
+app.get('/api/products', (request, response) => {
+    response.json(products)
+});
+
+app.get('/api/products/:id', (request, response) => {
     const product = products.find(el => el._id === request.params.id)
     response.json(product)
 });
