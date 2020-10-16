@@ -1,0 +1,19 @@
+{
+  "name": "mern-proshop",
+  "version": "1.0.0",
+  "description": "overcoming the obvious",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "comradeMauser",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/comradeMauser/MERN/issues"
+  },
+  "homepage": "https://github.com/comradeMauser/MERN#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
