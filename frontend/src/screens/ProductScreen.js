@@ -15,7 +15,7 @@ const ProductScreen = ({match}) => {
             setProduct(data)
         };
         fetchProduct()
-    }, [match.params.id])
+    }, [match])
 
     // const product = products.find(el => el._id === match.params.id)
     console.log(product)
