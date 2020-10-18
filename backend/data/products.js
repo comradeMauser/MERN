@@ -72,6 +72,7 @@ const products = [
         numReviews: 12,
     },
     {
+        // _id: '666',
         name: 'TEST Echo Dot 3rd Generation',
         image: '/images/alexa.jpg',
         description:
