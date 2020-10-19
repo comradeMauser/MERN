@@ -3,17 +3,19 @@ import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import colors from 'colors';
 import productRoutes from "./routes/productRoutes.js"
-
+import {notFoundError, errorHandler} from "./middleware/errorsMiddleware.js"
 
 dotenv.config()
 connectDB()
-const app = express();
+const app = express()
 
 app.get('/', (request, response) => {
     response.send("it's works!")
-});
+})
 
 app.use('/api/products', productRoutes)
+app.use(notFoundError)
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 7777
 const MODE = process.env.NODE_ENV
