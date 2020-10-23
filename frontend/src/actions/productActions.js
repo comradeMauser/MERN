@@ -8,21 +8,19 @@ import {
 
 const listProducts = () => async (dispatch) => {
     try {
-
         dispatch({type: PRODUCT_LIST_REQUEST})
-        const {data} = axios.get("/api/prosucts")
+        const {data} = await axios.get("/api/products")
 
         dispatch({
             type: PRODUCT_LIST_SUCCESS,
             payload: data
         })
-    } catch (eggog) {
+    } catch (error) {
         dispatch({
             type: PRODUCT_LIST_FAIL,
-            payload: eggog.response && eggog.response.data.message ?
-                eggog.response.data.message : eggog.message
+            payload: error.response && error.response.data.message ?
+                error.response.data.message : error.message
         })
-
     }
 }
 

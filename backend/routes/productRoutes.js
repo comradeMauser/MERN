@@ -10,6 +10,8 @@ const router = express.Router()
 // access           Public
 router.get('/', asyncHandler(async (request, response) => {
     const products = await Product.find({})
+    // error case test
+    // response.status(401)
     response.json(products)
 }));
 

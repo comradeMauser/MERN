@@ -5,8 +5,6 @@ import Rating from '../components/Rating';
 
 
 const ProductScreen = ({match}) => {
-    console.log(match.params)
-
     const [product, setProduct] = useState({})
 
     useEffect(() => {
