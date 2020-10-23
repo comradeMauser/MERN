@@ -1,16 +1,16 @@
 import React, {useEffect} from 'react';
-import {Row, Col, Alert} from 'react-bootstrap';
+import {Row, Col} from 'react-bootstrap';
+import ErrorMessage from "../components/ErrorMessage";
 import Product from '../components/Product';
 import {useDispatch, useSelector} from 'react-redux';
 import listProducts from '../actions/productActions';
-// import axios from 'axios';
+import SpinnerLoader from "../components/SpinnerLoader";
+
 
 const HomeScreen = () => {
     const dispatch = useDispatch()
-
     const productList = useSelector(state => state.productList)
     const {loading, error, products} = productList
-
 
     useEffect(() => {
             dispatch(listProducts())
@@ -21,9 +21,9 @@ const HomeScreen = () => {
         <div>
             <h2>latest products</h2>
             {   //loading case
-                loading ? <h4>...loading...</h4> :
+                loading ? <SpinnerLoader/> :
                     //error case
-                    error ? <Alert variant="danger">error: {error}</Alert> :
+                    error ? <ErrorMessage error={error}/> :
                         //main content
                         <Row>
                             {products.map(item => (
