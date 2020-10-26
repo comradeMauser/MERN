@@ -6,6 +6,7 @@ import Header from './components/Header';
 import About from './screens/About';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
+import CartScreen from './screens/CartScreen';
 
 
 const App = () => {
@@ -17,7 +18,8 @@ const App = () => {
                     <Container className='text-center'>
                         <Route path='/' component={HomeScreen} exact={true}/>
                         <Route path='/product/:id' component={ProductScreen}/>
-                    <Route path='/about' component={About}/>
+                        <Route path='/cart/:id?' component={CartScreen}/>
+                        <Route path='/about' component={About}/>
                     </Container>
                 </main>
                 <Footer/>

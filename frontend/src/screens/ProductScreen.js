@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {Card, Row, Col, Image, Button, ListGroup} from 'react-bootstrap';
+import React, {useState, useEffect} from 'react';
+import {Card, Row, Col, Image, Button, ListGroup, Form} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
 import ErrorMessage from "../components/ErrorMessage";
 import Rating from '../components/Rating';
@@ -7,7 +7,9 @@ import {listProductsDetails} from '../actions/productActions';
 import SpinnerLoader from "../components/SpinnerLoader";
 
 
-const ProductScreen = ({match}) => {
+const ProductScreen = ({match, history}) => {
+    const [qty, setQty] = useState(0)
+
     const dispatch = useDispatch()
     const details = useSelector(state => state.productDetails)
 
@@ -18,6 +20,10 @@ const ProductScreen = ({match}) => {
             dispatch(listProductsDetails(match.params.id))
         }, [dispatch, match]
     )
+
+    const addToCartHandler = () => {
+        history.push(`/cart/${match.params.id}?qty=${qty}`)
+    }
 
     return (
         <Card>
@@ -51,9 +57,37 @@ const ProductScreen = ({match}) => {
                                             <ListGroup.Item as='h2'> <strong> ${price} </strong> </ListGroup.Item>
                                             <ListGroup.Item as='h5'> {description} </ListGroup.Item>
 
+                                            {
+                                                product.countInStock > 0 && (
+                                                    <ListGroup.Item>
+                                                        <Row>
+                                                            <Col>Qty</Col>
+                                                            <Col>
+                                                                <Form.Control as='select'
+                                                                              value={qty}
+                                                                              onChange={
+                                                                                  e => setQty(e.target.value)
+                                                                              }>
+                                                                    {
+                                                                        [...Array(product.countInStock).keys()].map(item => (
+                                                                            <option key={item + 1} value={item + 1}>
+                                                                                {item + 1}
+                                                                            </option>
+                                                                        ))
+                                                                    }
+
+                                                                </Form.Control>
+                                                            </Col>
+                                                        </Row>
+                                                    </ListGroup.Item>
+                                                )
+                                            }
+
                                             <ListGroup.Item>
-                                                <Button className='btn btn-lg btn-outline-light btn-block my-1'> add to
-                                                    cart </Button>
+                                                <Button className='btn btn-lg btn-outline-light btn-block my-1'
+                                                        onClick={addToCartHandler}>
+                                                    add to cart
+                                                </Button>
                                             </ListGroup.Item>
 
                                         </ListGroup>
