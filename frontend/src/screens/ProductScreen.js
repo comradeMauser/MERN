@@ -8,7 +8,7 @@ import SpinnerLoader from "../components/SpinnerLoader";
 
 
 const ProductScreen = ({match, history}) => {
-    const [qty, setQty] = useState(0)
+    const [qty, setQty] = useState(1)
 
     const dispatch = useDispatch()
     const details = useSelector(state => state.productDetails)
