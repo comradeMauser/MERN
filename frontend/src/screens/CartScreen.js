@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {addToCart} from '../actions/cartActions';
+import {addToCart, removeFromCart} from '../actions/cartActions';
 import {Row, Col, Card, ListGroup, Image, Button, Form} from 'react-bootstrap';
 import ErrorMessage from '../components/ErrorMessage';
 
@@ -22,6 +22,7 @@ const CartScreen = ({match, history, location}) => {
 
     const removeFromCartHandker = (id) => {
         console.log(`removeFromCartHandker ${id}`)
+        dispatch(removeFromCart(id))
     }
 
     const checkoutHandler = () => {
@@ -116,8 +117,7 @@ const CartScreen = ({match, history, location}) => {
             </Row></div>
 
 
-    )
-        ;
+    );
 };
 
 export default CartScreen;
