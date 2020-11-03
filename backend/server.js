@@ -3,17 +3,21 @@ import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import colors from 'colors';
 import productRoutes from "./routes/productRoutes.js"
+import usersRoutes from "./routes/userRoutes.js"
 import {notFoundError, errorHandler} from "./middleware/errorsMiddleware.js"
 
 dotenv.config()
 connectDB()
 const app = express()
 
+app.use(express.json())
 app.get('/', (request, response) => {
     response.send("it's works!")
 })
 
 app.use('/api/products', productRoutes)
+app.use('/api/users', usersRoutes)
+
 app.use(notFoundError)
 app.use(errorHandler)
 
