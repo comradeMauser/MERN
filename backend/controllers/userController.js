@@ -11,7 +11,7 @@ export const authUser = asyncHandler(async (request, response) => {
 
     const user = await User.findOne({email})
 
-    if (user && await user.matchPassword(password)) {
+    if (user && (await user.matchPassword(password))) {
         response.json({
             _id: user._id,
             name: user.name,

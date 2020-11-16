@@ -26,6 +26,5 @@ export const protect = asyncHandler(async (request, response, next) => {
         throw new Error("Not authorized, no token")
     }
 
-    console.log("Hi asshole")
     next()
 })
