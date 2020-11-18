@@ -21,6 +21,7 @@ const RegisterScreen = ({location, history}) => {
     const {loading, error, userInfo} = userRegister
 
     const redirect = location.search ? location.search.split('=')[1] : '/'
+
     useEffect(() => {
         if (userInfo) {
             history.push(redirect)
