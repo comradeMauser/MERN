@@ -75,3 +75,30 @@ export const getUserProfile = asyncHandler(async (request, response) => {
         throw new Error("User not found")
     }
 });
+
+// description      Update user profile
+// route            PUT /api/users/profile
+// access           Private
+export const updateUserProfile = asyncHandler(async (request, response) => {
+    const user = await User.findById(request.user._id)
+
+    if (user) {
+        user.name = request.body.name || user.name
+        user.email = request.body.email || user.email
+        if (request.body.password) {
+            user.password = request.body.password
+        }
+        const updateUser = await user.save()
+
+        response.json({
+            _id: updateUser._id,
+            name: updateUser.name,
+            email: updateUser.email,
+            isAdmin: updateUser.isAdmin,
+            token: generateToken(updateUser._id),
+        })
+    } else {
+        response.status(404)
+        throw new Error("User not found")
+    }
+});
