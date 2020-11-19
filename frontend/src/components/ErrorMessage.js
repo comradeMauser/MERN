@@ -6,10 +6,13 @@ import PropTypes from 'prop-types';
 const ErrorMessage = ({error, message, children}) => {
     return (
         <div>
-            <h3 className='text-danger'><strong>ALARM und ACHTUNG!</strong></h3>
-            { // cases of errors or notification
-                error ? <Alert variant='danger'> {error} </Alert>
-                    : message ? <Alert variant='danger'> {message} </Alert>
+            {   // cases of errors or notification
+                error ?
+                    <>
+                        <h3 className='text-danger'><strong>ALARM und ACHTUNG!</strong></h3>
+                        <Alert variant='danger'> {error} </Alert>
+                    </>
+                    : message ? <Alert variant='success'> {message} </Alert>
                     : <Alert variant='danger'> {children} </Alert>
             }
         </div>

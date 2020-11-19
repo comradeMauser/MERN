@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Col, Form, Row} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
-import {getUserDetails} from '../actions/userActions';
+import {getUserDetails, updateUserProfile} from '../actions/userActions';
 import ErrorMessage from '../components/ErrorMessage';
 import SpinnerLoader from '../components/SpinnerLoader';
 
@@ -21,6 +21,9 @@ const ProfileScreen = ({history}) => {
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo} = userLogin
 
+    const userUpdProfile = useSelector(state => state.userUpdProfile)
+    const {success} = userUpdProfile
+
     useEffect(() => {
         if (!userInfo) {
             history.push('/login')
@@ -39,7 +42,7 @@ const ProfileScreen = ({history}) => {
         if (password !== confirmPassword) {
             setMessage("Passwords do not mutch")
         } else {
-            //SOME IMPORTANT CODE
+            dispatch(updateUserProfile({id: user._id, name, email, password}))
         }
     }
 
@@ -50,6 +53,7 @@ const ProfileScreen = ({history}) => {
                 <h2>User Profile</h2>
                 {message && <ErrorMessage message={message}/>}
                 {error && <ErrorMessage error={error}/>}
+                {success && <ErrorMessage message={'Profile Updated'}/>}
                 {loading && <SpinnerLoader/>}
 
                 <Form onSubmit={submitHandler}>
