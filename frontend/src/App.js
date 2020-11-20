@@ -10,6 +10,7 @@ import ProductScreen from './screens/ProductScreen';
 import CartScreen from './screens/CartScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import ShippingScreen from './screens/ShippingScreen';
 
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
                     <Container className='text-center'>
                         <Route path='/' component={HomeScreen} exact={true}/>
                         <Route path='/login' component={LoginScreen}/>
+                        <Route path='/shipping' component={ShippingScreen}/>
                         <Route path='/register' component={RegisterScreen}/>
                         <Route path='/profile' component={ProfileScreen}/>
                         <Route path='/product/:id' component={ProductScreen}/>
