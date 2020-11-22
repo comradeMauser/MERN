@@ -22,13 +22,14 @@ const PaymentScreen = ({history}) => {
         e.preventDefault()
         dispatch(savePaymentMethod(paymentMethod))
         history.push('/placeorder')
+
     }
 
     return (
         <FormContainer>
             <CheckoutSteps step1 step2 step3/>
             <h3>Payment Method</h3>
-            <Form onsubmit={submitHandler}>
+            <Form onSubmit={submitHandler}>
                 <Form.Group>
                     <Form.Label as='legend'>Select</Form.Label>
                     <Col>
