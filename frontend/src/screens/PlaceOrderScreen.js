@@ -2,13 +2,21 @@ import React from 'react';
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import CheckoutSteps from "../components/CheckoutSteps";
-import {Row, Col, ListGroup, Image} from 'react-bootstrap'
+import {Row, Col, ListGroup, Image, Card, Button} from 'react-bootstrap'
 import ErrorMessage from "../components/ErrorMessage";
 
 
 const PlaceOrderScreen = () => {
     const cart = useSelector(state => state.cart)
 
+    cart.itemsPrice = cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+    cart.shippingPrice = cart.itemsPrice > 100 ? 10 : 33
+    cart.taxPrice = Number(cart.itemsPrice * 0.06).toFixed(1)
+    cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(1)
+
+    const placeOrderHandler = () => {
+        console.log("placeOrderHandler")
+    }
 
     return (
         <>
@@ -54,7 +62,46 @@ const PlaceOrderScreen = () => {
                                     ))}
                                 </ListGroup>}
                         </ListGroup.Item>
+
                     </ListGroup>
+                </Col>
+
+                {/*Order Summary*/}
+                <Col md={4}>
+                    <Card>
+                        <ListGroup variant='flush'>
+                            <ListGroup.Item><h2>Order Summary</h2></ListGroup.Item>
+                            <ListGroup.Item>
+                                <Row>
+                                    <Col>Items</Col>
+                                    <Col>${cart.itemsPrice}</Col>
+                                </Row>
+                            </ListGroup.Item>
+                            <ListGroup.Item>
+                                <Row>
+                                    <Col>Shipping</Col>
+                                    <Col>${cart.shippingPrice}</Col>
+                                </Row>
+                            </ListGroup.Item>
+                            <ListGroup.Item>
+                                <Row>
+                                    <Col>Tax</Col>
+                                    <Col>${cart.taxPrice}</Col>
+                                </Row>
+                            </ListGroup.Item>
+                            <ListGroup.Item>
+                                <Row>
+                                    <Col>Total</Col>
+                                    <Col>${cart.totalPrice}</Col>
+                                </Row>
+                            </ListGroup.Item>
+                            <ListGroup.Item>
+                                <Button type='button' className='btn-block'
+                                        disabled={cart.cartItems === 0}
+                                        onClick={placeOrderHandler}>Place Order</Button>
+                            </ListGroup.Item>
+                        </ListGroup>
+                    </Card>
                 </Col>
             </Row>
 
@@ -64,3 +111,18 @@ const PlaceOrderScreen = () => {
 };
 
 export default PlaceOrderScreen;
+
+/*
+<Col md={4}>
+    <Card>
+        <ListGroup variant='flush'>
+            <ListGroup.Item><h2>Order Summary</h2></ListGroup.Item>
+            <ListGroup.Item>
+                <Row>
+                    <Col>Items</Col>
+                    <Col>${cart.itemPrice}</Col>
+                </Row>
+            </ListGroup.Item>
+        </ListGroup>
+    </Card>
+</Col>*/
