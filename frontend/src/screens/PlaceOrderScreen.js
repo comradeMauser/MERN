@@ -1,12 +1,14 @@
-import React from 'react';
-import {useSelector} from "react-redux";
-import {Link} from "react-router-dom";
-import CheckoutSteps from "../components/CheckoutSteps";
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {Link} from 'react-router-dom';
+import CheckoutSteps from '../components/CheckoutSteps';
 import {Row, Col, ListGroup, Image, Card, Button} from 'react-bootstrap'
-import ErrorMessage from "../components/ErrorMessage";
+import ErrorMessage from '../components/ErrorMessage';
+import {createOrder} from '../actions/orderActions';
 
 
-const PlaceOrderScreen = () => {
+const PlaceOrderScreen = ({history}) => {
+    const dispatch = useDispatch()
     const cart = useSelector(state => state.cart)
 
     cart.itemsPrice = cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
@@ -14,8 +16,27 @@ const PlaceOrderScreen = () => {
     cart.taxPrice = Number(cart.itemsPrice * 0.06).toFixed(1)
     cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(1)
 
+    const orderCreate = useSelector(state => state.orderCreate)
+    const {success, order, error} = orderCreate
+
+    useEffect(() => {
+        if (success) {
+            history.push(`/order/${order._id}`)
+        }
+        // eslint-disable-next-line
+    }, [history, success])
+
     const placeOrderHandler = () => {
         console.log("placeOrderHandler")
+        dispatch(createOrder({
+            orderItems: cart.cartItems,
+            shippingAddress: cart.shippingAddress,
+            paymentMethod: cart.paymentMethod,
+            itemsPrice: cart.itemsPrice,
+            shippingPrice: cart.shippingPrice,
+            taxPrice: cart.taxPrice,
+            totalPrice: cart.totalPrice
+        }))
     }
 
     return (
@@ -95,6 +116,11 @@ const PlaceOrderScreen = () => {
                                     <Col>${cart.totalPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
+
+                            <ListGroup.Item>
+                                {
+                                    error && <ErrorMessage error={error}/>}</ListGroup.Item>
+
                             <ListGroup.Item>
                                 <Button type='button' className='btn-block'
                                         disabled={cart.cartItems === 0}
@@ -111,18 +137,3 @@ const PlaceOrderScreen = () => {
 };
 
 export default PlaceOrderScreen;
-
-/*
-<Col md={4}>
-    <Card>
-        <ListGroup variant='flush'>
-            <ListGroup.Item><h2>Order Summary</h2></ListGroup.Item>
-            <ListGroup.Item>
-                <Row>
-                    <Col>Items</Col>
-                    <Col>${cart.itemPrice}</Col>
-                </Row>
-            </ListGroup.Item>
-        </ListGroup>
-    </Card>
-</Col>*/

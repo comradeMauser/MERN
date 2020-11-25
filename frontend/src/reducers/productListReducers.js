@@ -10,7 +10,7 @@ import {
 }
     from '../constants/productConstants';
 
-const productListReducer = (state = {products: []}, action) => {
+const productListReducers = (state = {products: []}, action) => {
     switch (action.type) {
         case PRODUCT_LIST_REQUEST:
             return {loading: true, products: []};
@@ -36,4 +36,4 @@ const productDetailsReducer = (state = {product: {}}, action) => {
     }
 }
 
-export {productListReducer, productDetailsReducer}
+export {productListReducers, productDetailsReducer}
