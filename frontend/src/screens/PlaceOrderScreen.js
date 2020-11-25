@@ -118,8 +118,8 @@ const PlaceOrderScreen = ({history}) => {
                             </ListGroup.Item>
 
                             <ListGroup.Item>
-                                {
-                                    error && <ErrorMessage error={error}/>}</ListGroup.Item>
+                                {error && <ErrorMessage error={error}/>}
+                            </ListGroup.Item>
 
                             <ListGroup.Item>
                                 <Button type='button' className='btn-block'
