@@ -40,4 +40,4 @@ export const getOrderById = asyncHandler(async (request, response) => {
         response.status(404)
         throw new Error("Order not found")
     }
-})
+});
