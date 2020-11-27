@@ -40,3 +40,26 @@ export const getOrderById = asyncHandler(async (request, response) => {
         throw new Error("Order not found")
     }
 });
+
+// description      Update order to paid
+// route            GET /api/orders/:id/pay
+// access           Private
+export const updateOrderToPaid = asyncHandler(async (request, response) => {
+    const order = await Order.findById(request.params.id)
+
+    if (order) {
+        order.isPaid = true
+        order.paidAt = Date.now()
+        order.paymentResult = {
+            id: request.body.id,
+            status: request.body.status,
+            update_time: request.body.upadete_time,
+            email_address: request.body.payer.email_address,
+        }
+        const updatedOrder = await order.save()
+        response.json(updatedOrder)
+    } else {
+        response.status(404)
+        throw new Error("Order not found")
+    }
+});

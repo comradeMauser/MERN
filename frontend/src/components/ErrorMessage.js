@@ -13,7 +13,7 @@ const ErrorMessage = ({error, message, children}) => {
                         <Alert variant='danger'> {error} </Alert>
                     </>
                     : message ? <Alert variant='success'> {message} </Alert>
-                    : <Alert variant='danger'> {children} </Alert>
+                    : <Alert variant='secondary'> {children} </Alert>
             }
         </div>
     );
