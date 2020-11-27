@@ -7,33 +7,25 @@ import ErrorMessage from "../components/ErrorMessage";
 import SpinnerLoader from "../components/SpinnerLoader";
 
 const OrderScreen = ({match}) => {
-    console.log(match.params.id)
-    const {orderId} = match.params.id
+    const orderId = match.params.id
     const dispatch = useDispatch()
 
     const orderDetails = useSelector(state => state.orderDetails)
     const {loading, order, error} = orderDetails
-    if (!loading) {
-        //   Calculate prices
-        const addDecimals = (num) => {
-            return (Math.round(num * 100) / 100).toFixed(2)
-        }
 
-        order.itemsPrice = addDecimals(
-            order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
-        )
+    if (!loading) {
+        order.itemsPrice = order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0).toFixed(2)
     }
-    console.log(order)
+
     useEffect(() => {
         dispatch(getOrderDetails(orderId))
-    }, [dispatch, orderId])
+    }, [])
 
 
     return loading ? <SpinnerLoader/> :
         error ? <ErrorMessage error={error}/> :
             <>
                 <h1>Order: {order._id}</h1>
-                {console.log(order._id)}
 
                 <Row>
                     <Col md={8}>
@@ -43,9 +35,9 @@ const OrderScreen = ({match}) => {
                                 <p>
                                     <strong>Address: </strong>
                                     {`${order.shippingAddress.address}, 
-                                ${order.shippingAddress.city}, 
-                                ${order.shippingAddress.postalCode}, 
-                                ${order.shippingAddress.country}`}
+                                      ${order.shippingAddress.city}, 
+                                      ${order.shippingAddress.postalCode}, 
+                                      ${order.shippingAddress.country}`}
                                 </p>
                             </ListGroup.Item>
 
@@ -89,7 +81,6 @@ const OrderScreen = ({match}) => {
                                     <Row>
                                         <Col>Items</Col>
                                         <Col>${order.itemsPrice}</Col>
-                                        {console.log(order.itemsPrice)}
                                     </Row>
                                 </ListGroup.Item>
                                 <ListGroup.Item>

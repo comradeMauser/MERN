@@ -11,10 +11,10 @@ const PlaceOrderScreen = ({history}) => {
     const dispatch = useDispatch()
     const cart = useSelector(state => state.cart)
 
-    cart.itemsPrice = cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+    cart.itemsPrice = cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0).toFixed(2)
     cart.shippingPrice = cart.itemsPrice > 100 ? 10 : 33
-    cart.taxPrice = Number(cart.itemsPrice * 0.06).toFixed(1)
-    cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(1)
+    cart.taxPrice = Number(cart.itemsPrice * 0.06).toFixed(2)
+    cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(2)
 
     const orderCreate = useSelector(state => state.orderCreate)
     const {success, order, error} = orderCreate

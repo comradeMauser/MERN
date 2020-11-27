@@ -32,7 +32,6 @@ export const addOrderItems = asyncHandler(async (request, response) => {
 // access           Private
 export const getOrderById = asyncHandler(async (request, response) => {
     const order = await Order.findById(request.params.id).populate("user", "name email")
-    console.log(request.params.id)
 
     if (order) {
         response.json(order)
