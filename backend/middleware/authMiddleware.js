@@ -27,4 +27,14 @@ export const protect = asyncHandler(async (request, response, next) => {
     }
 
     next()
-})
+});
+
+export const admin = (request, response, next) => {
+    if (request.user && request.user.isAdmin) {
+        next()
+    } else {
+        response.status(401)
+        throw new Error("You`re not a boss!")
+    }
+};
+
