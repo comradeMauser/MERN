@@ -103,11 +103,24 @@ export const updateUserProfile = asyncHandler(async (request, response) => {
     }
 });
 
-
 // description      Get all users
 // route            GET /api/users
 // access           Private/Admin
 export const getUsers = asyncHandler(async (request, response) => {
     const users = await User.find({})
     response.json(users)
+});
+
+// description      Delete user
+// route            DELETE /api/users/:id
+// access           Private/Admin
+export const deleteUser = asyncHandler(async (request, response) => {
+    const user = await User.findById(request.params.id)
+    if (user) {
+        await user.remove()
+        response.json({message: "erased"})
+    } else {
+        response.status(404)
+        throw new Error("I don`t know this guy")
+    }
 });
