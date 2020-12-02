@@ -26,7 +26,6 @@ const Header = () => {
                         <LinkContainer to='/cart'>
                             <Nav.Link><i className="fa fa-shopping-cart"> </i> Cart</Nav.Link>
                         </LinkContainer>
-
                         {
                             userInfo ?
                                 <NavDropdown title={userInfo.name} id='username'>
@@ -39,9 +38,24 @@ const Header = () => {
                                 <LinkContainer to='/login'>
                                     <Nav.Link><i className="fa fa-user"> </i> Sign in</Nav.Link>
                                 </LinkContainer>
-
                         }
 
+                        {/*Admin panel*/}
+                        {
+                            userInfo && userInfo.isAdmin && (
+                                <NavDropdown title='Admin' id='adminMenu'>
+                                    <LinkContainer to='/admin/userlist'>
+                                        <NavDropdown.Item>Users</NavDropdown.Item>
+                                    </LinkContainer>
+                                    <LinkContainer to='/admin/productlist'>
+                                        <NavDropdown.Item>Products</NavDropdown.Item>
+                                    </LinkContainer>
+                                    <LinkContainer to='/admin/orderlist'>
+                                        <NavDropdown.Item>Orders</NavDropdown.Item>
+                                    </LinkContainer>
+                                </NavDropdown>
+                            )
+                        }
 
                         <LinkContainer to='/about'>
                             <Nav.Link>About</Nav.Link>
