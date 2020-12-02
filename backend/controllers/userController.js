@@ -124,3 +124,43 @@ export const deleteUser = asyncHandler(async (request, response) => {
         throw new Error("I don`t know this guy")
     }
 });
+
+// description      Get user by id
+// route            GET /api/users/:id
+// access           Private/Admin
+export const getUserById = asyncHandler(async (request, response) => {
+    const user = await User.findById(request.params.id).select('-password')
+
+    if (user) {
+        response.json(user)
+    } else {
+        response.status(404)
+        throw new Error("User not found")
+    }
+});
+
+// description      Update user profile
+// route            PUT /api/users/profile
+// access           Private
+export const updateUser = asyncHandler(async (request, response) => {
+    const user = await User.findById(request.params.id)
+
+    if (user) {
+        user.name = request.body.name || user.name
+        user.email = request.body.email || user.email
+        user.isAdmin = request.body.isAdmin
+
+        const updateUser = await user.save()
+
+        response.json({
+            _id: updateUser._id,
+            name: updateUser.name,
+            email: updateUser.email,
+            isAdmin: updateUser.isAdmin,
+            token: generateToken(updateUser._id),
+        })
+    } else {
+        response.status(404)
+        throw new Error("User not found")
+    }
+});
