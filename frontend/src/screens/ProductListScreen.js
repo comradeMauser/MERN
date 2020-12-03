@@ -2,7 +2,8 @@ import React, {useEffect} from 'react';
 import {Button, Col, Row, Table} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
 import {LinkContainer} from 'react-router-bootstrap';
-import {listProducts, deleteProduct} from '../actions/productActions';
+import {listProducts, deleteProduct, createProduct} from '../actions/productActions';
+import {PRODUCT_CREATE_RESET} from '../constants/productConstants';
 import ErrorMessage from '../components/ErrorMessage';
 import SpinnerLoader from '../components/SpinnerLoader';
 
@@ -16,16 +17,25 @@ const ProductListScreen = ({history}) => {
     const productDelete = useSelector(state => state.productDelete)
     const {loading: loadingDelete, error: errorDelete, success: successDelete} = productDelete
 
+    const productCreate = useSelector(state => state.productCreate)
+    const {loading: loadingCreate, error: errorCreate, success: successCreate, product: createdProduct} = productCreate
+
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo} = userLogin
 
     useEffect(() => {
-        if (userInfo && userInfo.isAdmin) {
-            dispatch(listProducts())
-        } else {
-            history.push('/')
+        dispatch({type: PRODUCT_CREATE_RESET})
+
+        if (!userInfo.isAdmin) {
+            history.push('/login')
         }
-    }, [dispatch, userInfo, history, successDelete])
+        if (successCreate) {
+            history.push(`/admin/product/${createdProduct._id}/edit`)
+        } else {
+            dispatch(listProducts())
+        }
+
+    }, [dispatch, userInfo, history, successDelete, createdProduct, successCreate])
 
     const deleteHandler = (id) => {
         if (window.confirm("are you sure?")) {
@@ -33,9 +43,8 @@ const ProductListScreen = ({history}) => {
         }
     }
 
-    const createProductHandler = (product) => {
-        console.log(createProductHandler)
-        //TODO: createProductHandler
+    const createProductHandler = () => {
+        dispatch(createProduct())
     }
 
     return (
@@ -52,6 +61,8 @@ const ProductListScreen = ({history}) => {
             </Row>
             {loadingDelete && <SpinnerLoader/>}
             {errorDelete && <ErrorMessage error={errorDelete}/>}
+            {loadingCreate && <SpinnerLoader/>}
+            {errorCreate && <ErrorMessage error={errorCreate}/>}
             {loading ? <SpinnerLoader/> : error ? <ErrorMessage error={error}/> :
                 <Table className='table-sm' striped bordered hover responsive>
                     <thead>
