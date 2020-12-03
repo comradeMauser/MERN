@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Button, Col, Row, Table} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
 import {LinkContainer} from 'react-router-bootstrap';
-import {listProducts} from '../actions/productActions';
+import {listProducts, deleteProduct} from '../actions/productActions';
 import ErrorMessage from '../components/ErrorMessage';
 import SpinnerLoader from '../components/SpinnerLoader';
 
@@ -13,6 +13,9 @@ const ProductListScreen = ({history}) => {
     const productList = useSelector(state => state.productList)
     const {loading, error, products} = productList
 
+    const productDelete = useSelector(state => state.productDelete)
+    const {loading: loadingDelete, error: errorDelete, success: successDelete} = productDelete
+
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo} = userLogin
 
@@ -22,11 +25,11 @@ const ProductListScreen = ({history}) => {
         } else {
             history.push('/')
         }
-    }, [dispatch, userInfo, history])
+    }, [dispatch, userInfo, history, successDelete])
 
     const deleteHandler = (id) => {
         if (window.confirm("are you sure?")) {
-            //TODO Delete Products Handler
+            dispatch(deleteProduct(id))
         }
     }
 
@@ -47,7 +50,8 @@ const ProductListScreen = ({history}) => {
                     </Button>
                 </Col>
             </Row>
-
+            {loadingDelete && <SpinnerLoader/>}
+            {errorDelete && <ErrorMessage error={errorDelete}/>}
             {loading ? <SpinnerLoader/> : error ? <ErrorMessage error={error}/> :
                 <Table className='table-sm' striped bordered hover responsive>
                     <thead>
