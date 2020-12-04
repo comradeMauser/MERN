@@ -130,8 +130,6 @@ const PlaceOrderScreen = ({history}) => {
                     </Card>
                 </Col>
             </Row>
-
-
         </>
     );
 };
