@@ -6,6 +6,7 @@ import Header from './components/Header';
 import About from './screens/About';
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
+import OrderListScreen from './screens/OrderListScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import ProductEditScreen from './screens/ProductEditScreen';
 import ProductListScreen from './screens/ProductListScreen';
@@ -41,6 +42,8 @@ const App = () => {
                         <Route path='/admin/user/:id/edit' component={UserEditScreen}/>
                         <Route path='/admin/productlist' component={ProductListScreen}/>
                         <Route path='/admin/product/:id/edit' component={ProductEditScreen}/>
+                        <Route path='/admin/orderlist' component={OrderListScreen}/>
+                        {/*<Route path='/admin/order' component={UserListScreen}/>*/}
                         <Route path='/about' component={About}/>
                     </Container>
                 </main>
