@@ -85,7 +85,7 @@ const ProductListScreen = ({history}) => {
                             <td>{product.category}</td>
                             <td>{product.brand}</td>
                             <td>
-                                <LinkContainer to={`/admin/user/${product._id}/edit`}>
+                                <LinkContainer to={`/admin/product/${product._id}/edit`}>
                                     <Button variant='success' className='btn-sm mr-1'>
                                         <i className='fas fa-edit'> </i>
                                     </Button>
