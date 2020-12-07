@@ -8,13 +8,17 @@ import SpinnerLoader from "../components/SpinnerLoader";
 
 
 const ProductScreen = ({match, history}) => {
-    const [qty, setQty] = useState(1)
-
     const dispatch = useDispatch()
-    const details = useSelector(state => state.productDetails)
 
-    const {loading, error, product} = details
-    const {name, image, description, price, countInStock, rating, numReviews} = product
+    const [qty, setQty] = useState(1)
+    // const [qty, setQty] = useState(1)
+    // const [qty, setQty] = useState(1)
+
+    const productDetails = useSelector(state => state.productDetails)
+    const {loading, error, product} = productDetails
+    // const {name, image, description, price, countInStock, rating, numReviews} = product
+    // console.log(product.reviews.length)
+
 
     useEffect(() => {
             dispatch(listProductsDetails(match.params.id))
@@ -38,24 +42,25 @@ const ProductScreen = ({match, history}) => {
                                     <Col className="col-7">
                                         <Image
                                             className='img-fluid'
-                                            src={image} alt={name}/>
+                                            src={product.image} alt={product.name}/>
                                     </Col>
 
                                     <Col className="col-4">
                                         <ListGroup className='list-unstyled' variant='flush'>
-                                            <ListGroup.Item as='h2'> {name}</ListGroup.Item>
+                                            <ListGroup.Item as='h2'> {product.name}</ListGroup.Item>
 
                                             <ListGroup.Item>
-                                                {rating ? `${rating} rating` : 'no rating yet'}
-                                                <Rating value={rating} numReviews={numReviews}/>
+                                                {product.rating ? `${product.rating} rating` : 'no rating yet'}
+                                                <Rating value={product.rating} numReviews={product.numReviews}/>
                                             </ListGroup.Item>
 
                                             <ListGroup.Item>
-                                                {countInStock ? countInStock + ' in stock' : 'out of stock'}
+                                                {product.countInStock ? product.countInStock + ' in stock' : 'out of stock'}
                                             </ListGroup.Item>
 
-                                            <ListGroup.Item as='h2'> <strong> ${price} </strong> </ListGroup.Item>
-                                            <ListGroup.Item as='h5'> {description} </ListGroup.Item>
+                                            <ListGroup.Item as='h2'> <strong> ${product.price} </strong>
+                                            </ListGroup.Item>
+                                            <ListGroup.Item as='h5'> {product.description} </ListGroup.Item>
 
                                             {
                                                 product.countInStock > 0 && (
