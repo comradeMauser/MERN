@@ -1,8 +1,10 @@
 import React from 'react';
-import {Container, Navbar, Nav, Form, FormControl, Button, NavDropdown} from 'react-bootstrap';
+import {Route} from 'react-router-dom';
+import {Container, Navbar, Nav, NavDropdown} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
 import {logout} from '../actions/userActions';
+import SearchBox from './SearchBox';
 
 const Header = () => {
     const dispatch = useDispatch()
@@ -62,10 +64,8 @@ const Header = () => {
                         </LinkContainer>
                     </Nav>
 
-                    <Form inline>
-                        <FormControl type="text" placeholder="Search" className="mr-sm-2"/>
-                        <Button variant="outline-info">Search</Button>
-                    </Form>
+                    <Route render={({history}) => <SearchBox history={history}/>}/>
+
                 </Container>
             </Navbar>
         </header>

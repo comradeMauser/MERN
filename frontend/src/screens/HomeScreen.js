@@ -7,14 +7,15 @@ import {listProducts} from '../actions/productActions';
 import SpinnerLoader from "../components/SpinnerLoader";
 
 
-const HomeScreen = () => {
+const HomeScreen = ({match}) => {
+    const keyword = match.params.keyword
     const dispatch = useDispatch()
     const list = useSelector(state => state.productList)
     const {loading, error, products} = list
 
     useEffect(() => {
-            dispatch(listProducts())
-        }, [dispatch]
+            dispatch(listProducts(keyword))
+        }, [dispatch, keyword]
     )
 
     return (
