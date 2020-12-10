@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {Row, Col} from 'react-bootstrap';
 import ErrorMessage from '../components/ErrorMessage';
+import ProductCarousel from '../components/ProductCarousel';
 import SpinnerLoader from '../components/SpinnerLoader';
 import Product from '../components/Product';
 import {useDispatch, useSelector} from 'react-redux';
@@ -23,25 +24,22 @@ const HomeScreen = ({match}) => {
     )
 
     return (
-        <div>
-            {   //loading case
-                loading ? <SpinnerLoader/> :
-                    //error case
-                    error ? <ErrorMessage error={error}/> :
-                        //main content
-                        <>
-                            <h2>Latest products</h2>
-                            <Row>
-                                {products.map(item => (
-                                    <Col key={item._id} sm={12} md={6} lg={4} xl={3}>
-                                        <Product product={item}/>
-                                    </Col>
-                                ))}
-                            </Row>
-                            <Paginate pages={pages} page={page} keyword={keyword ? keyword : ''}></Paginate>
-                        </>
+        <>
+            {!keyword && <ProductCarousel/>}
+            {loading ? <SpinnerLoader/> : error ? <ErrorMessage error={error}/> :
+                <>
+                    <h2>Latest products</h2>
+                    <Row>
+                        {products.map(item => (
+                            <Col key={item._id} sm={12} md={6} lg={4} xl={3}>
+                                <Product product={item}/>
+                            </Col>
+                        ))}
+                    </Row>
+                    <Paginate pages={pages} page={page} keyword={keyword ? keyword : ''}/>
+                </>
             }
-        </div>
+        </>
     );
 }
 

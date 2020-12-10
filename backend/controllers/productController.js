@@ -129,3 +129,13 @@ export const createProductReview = asyncHandler(async (request, response) => {
         throw new Error("Product not found")
     }
 });
+
+// description      Get top rated products
+// route            GET /api/products/top
+// access           Public
+export const getTopProduct = asyncHandler(async (request, response) => {
+    const products = await Product.find({}).sort({rating: -1}).limit(3)
+
+    response.json(products)
+
+});
