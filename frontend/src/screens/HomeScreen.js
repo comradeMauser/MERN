@@ -1,21 +1,25 @@
 import React, {useEffect} from 'react';
 import {Row, Col} from 'react-bootstrap';
-import ErrorMessage from "../components/ErrorMessage";
+import ErrorMessage from '../components/ErrorMessage';
+import SpinnerLoader from '../components/SpinnerLoader';
 import Product from '../components/Product';
 import {useDispatch, useSelector} from 'react-redux';
 import {listProducts} from '../actions/productActions';
-import SpinnerLoader from "../components/SpinnerLoader";
+import Paginate from '../components/Paginate';
 
 
 const HomeScreen = ({match}) => {
     const keyword = match.params.keyword
+    const pageNumber = match.params.pageNumber || 1
+
     const dispatch = useDispatch()
-    const list = useSelector(state => state.productList)
-    const {loading, error, products} = list
+
+    const productList = useSelector(state => state.productList)
+    const {loading, error, products, pages, page} = productList
 
     useEffect(() => {
-            dispatch(listProducts(keyword))
-        }, [dispatch, keyword]
+            dispatch(listProducts(keyword, pageNumber))
+        }, [dispatch, keyword, pageNumber]
     )
 
     return (
@@ -26,7 +30,7 @@ const HomeScreen = ({match}) => {
                     error ? <ErrorMessage error={error}/> :
                         //main content
                         <>
-                            <h2>latest products</h2>
+                            <h2>Latest products</h2>
                             <Row>
                                 {products.map(item => (
                                     <Col key={item._id} sm={12} md={6} lg={4} xl={3}>
@@ -34,6 +38,7 @@ const HomeScreen = ({match}) => {
                                     </Col>
                                 ))}
                             </Row>
+                            <Paginate pages={pages} page={page} keyword={keyword ? keyword : ''}></Paginate>
                         </>
             }
         </div>

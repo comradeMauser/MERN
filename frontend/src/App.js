@@ -3,7 +3,6 @@ import {Container} from 'react-bootstrap';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Footer from './components/Footer';
 import Header from './components/Header';
-import SearchBox from './components/SearchBox';
 import About from './screens/About';
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -41,11 +40,14 @@ const App = () => {
                         <Route path='/cart/:id?' component={CartScreen}/>
                         <Route path='/admin/userlist' component={UserListScreen}/>
                         <Route path='/admin/user/:id/edit' component={UserEditScreen}/>
-                        <Route path='/admin/productlist' component={ProductListScreen}/>
+                        <Route path='/admin/productlist' component={ProductListScreen} exact={true}/>
+                        <Route path='/admin/productlist/:pageNumber' component={ProductListScreen} exact={true}/>
                         <Route path='/admin/product/:id/edit' component={ProductEditScreen}/>
                         <Route path='/admin/orderlist' component={OrderListScreen}/>
                         <Route path='/about' component={About}/>
-                        <Route path='/search/:keyword' component={SearchBox} exact={true}/>
+                        <Route path='/search/:keyword' component={HomeScreen} exact={true}/>
+                        <Route path='/page/:pageNumber' component={HomeScreen} exact={true}/>
+                        <Route path='/search/:keyword/page/:pageNumber' component={HomeScreen} exact={true}/>
                     </Container>
                 </main>
                 <Footer/>

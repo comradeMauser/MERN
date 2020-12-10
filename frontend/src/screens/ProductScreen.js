@@ -149,7 +149,6 @@ const ProductScreen = ({match, history}) => {
                             </ListGroup>
                         </Col>
                     </Row>
-
                 </Card.Body>
             </>
             }

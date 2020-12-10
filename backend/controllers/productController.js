@@ -6,6 +6,9 @@ import Product from "../models/productModel.js";
 // route            GET /api/products
 // access           Public
 export const getProducts = asyncHandler(async (request, response) => {
+    const pageSize = 4
+    const page = Number(request.query.pageNumber) || 1
+
     const keyword = request.query.keyword ? {
             name: {
                 $regex: request.query.keyword,
@@ -13,12 +16,14 @@ export const getProducts = asyncHandler(async (request, response) => {
             },
         }
         : {}
-    const products = await Product.find({...keyword})
-    response.json(products)
+
+    const count = await Product.countDocuments({...keyword})
+    const products = await Product.find({...keyword}).limit(pageSize).skip(pageSize * (page - 1))
+    response.json({products, page, pages: Math.ceil(count / pageSize)})
 });
 
 // description      Fetch single product
-// route            GET /api/products/:id
+// route            GET /api/products/:id1
 // access           Public
 export const getProductById = asyncHandler(async (request, response) => {
     const product = await Product.findById(request.params.id)
