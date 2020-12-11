@@ -1,11 +1,13 @@
 import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {Row, Col} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
+import {listProducts} from '../actions/productActions';
+import Meta from '../components/Meta';
 import ErrorMessage from '../components/ErrorMessage';
 import ProductCarousel from '../components/ProductCarousel';
 import SpinnerLoader from '../components/SpinnerLoader';
 import Product from '../components/Product';
-import {useDispatch, useSelector} from 'react-redux';
-import {listProducts} from '../actions/productActions';
 import Paginate from '../components/Paginate';
 
 
@@ -25,7 +27,8 @@ const HomeScreen = ({match}) => {
 
     return (
         <>
-            {!keyword && <ProductCarousel/>}
+            <Meta/>
+            {!keyword ? <ProductCarousel/> : <Link to='/' className='btn btn-light'>Go Back</Link>}
             {loading ? <SpinnerLoader/> : error ? <ErrorMessage error={error}/> :
                 <>
                     <h2>Latest products</h2>
